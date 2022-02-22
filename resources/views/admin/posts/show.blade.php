@@ -8,5 +8,9 @@
 
         <p>{{ $post->content }}</p>
 
+        <div>
+            <a href="{{ route('admin.posts.edit', ['post' => $post->id]) }}">Modifica post</a>
+        </div>
+
     </section>
 @endsection
