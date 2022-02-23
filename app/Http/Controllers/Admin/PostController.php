@@ -130,13 +130,13 @@ class PostController extends Controller
         $slug_base = $slug;
 
         $post_found = Post::where('slug', '=', $slug)->first();
-        $counter = 1;
+        $counter = 0;
         while($post_found) {
             //if existe, add -1 to slug
             //check if there isn't slug -1, if existe try with -2
-            $slug = $slug_base . '-' . $counter;
-            $post_found = Post::where('slug', '=', $slug)->first();
             $counter++;
+            $slug = $slug_base . '-' . $counter;
+            $post_found = Post::where('slug', '=', $slug)->first();    
         }
 
         return $slug;
