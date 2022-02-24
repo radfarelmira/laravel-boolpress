@@ -5,6 +5,8 @@
         <h1>{{ $post->title }}</h1>
 
         <div class="mb-2"><strong>Slug:</strong> {{ $post->slug }}</div>
+        
+        <div class="mb-2"><strong>Categoria:</strong> {{ $category? $category->name : 'Nessuna' }}</div>
 
         <p>{{ $post->content }}</p>
 

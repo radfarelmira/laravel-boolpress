@@ -46,7 +46,7 @@ class PostController extends Controller
         $new_post = new Post();
         $new_post->fill($form_data);
 
-        $new_post->slug = $this->getUniqueSlugFromTilte($form_data['title']);
+        $new_post->slug = Post::getUniqueSlugFromTilte($form_data['title']);
 
         $new_post->save();
         
@@ -63,7 +63,9 @@ class PostController extends Controller
     {
         $post = Post::findOrFail($id);
 
-        return view('admin.posts.show', compact('post'));
+        $category = $post->category;
+
+        return view('admin.posts.show', compact('post', 'category'));
     }
 
     /**
@@ -95,7 +97,7 @@ class PostController extends Controller
 
         //Update slug if user in edit fase change il title
         if($form_data['title'] != $post->title) {
-            $from_data['slug'] = $this->getUniqueSlugFromTilte($form_data['title']);
+            $from_data['slug'] = Post::getUniqueSlugFromTilte($form_data['title']);
         }
 
         $post->update($form_data);
@@ -124,21 +126,4 @@ class PostController extends Controller
         ];
     }
 
-    protected function getUniqueSlugFromTilte($title) {
-        //Control if existe a post with this slug
-        $slug = Str::slug($title);
-        $slug_base = $slug;
-
-        $post_found = Post::where('slug', '=', $slug)->first();
-        $counter = 0;
-        while($post_found) {
-            //if existe, add -1 to slug
-            //check if there isn't slug -1, if existe try with -2
-            $counter++;
-            $slug = $slug_base . '-' . $counter;
-            $post_found = Post::where('slug', '=', $slug)->first();    
-        }
-
-        return $slug;
-    }
 }
