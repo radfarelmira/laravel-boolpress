@@ -98,9 +98,9 @@ class PostController extends Controller
 
         $post = Post::findOrFail($id);
 
-        //Update slug if user in edit fase change il title
+        //Update slug if user in edit fase change the title
         if($form_data['title'] != $post->title) {
-            $from_data['slug'] = Post::getUniqueSlugFromTilte($form_data['title']);
+            $form_data['slug'] = Post::getUniqueSlugFromTilte($form_data['title']);
         }
 
         $post->update($form_data);
