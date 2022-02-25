@@ -64,6 +64,9 @@ class PostController extends Controller
     public function show($id)
     {
         $post = Post::findOrFail($id);
+        $post_tag = $post->tags;
+        $tag = $post_tag[0];
+        dd($tag->posts);
 
         $category = $post->category;
 

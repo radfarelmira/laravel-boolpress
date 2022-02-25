@@ -18,6 +18,10 @@ class Post extends Model
         return $this->belongsTo('App\Category');
     }
 
+    public function tags() {
+        return $this->belongsToMany('App\Tag');
+    }
+
     public static function getUniqueSlugFromTilte($title) {
         //Control if existe a post with this slug
         $slug = Str::slug($title);
