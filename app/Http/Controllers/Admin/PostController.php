@@ -86,8 +86,9 @@ class PostController extends Controller
     {
         $post = Post::findOrFail($id);
         $categories = Category::all();
+        $tags = Tag::all();
 
-        return view('admin.posts.edit', compact('post', 'categories'));
+        return view('admin.posts.edit', compact('post', 'categories', 'tags'));
     }
 
     /**
@@ -110,6 +111,15 @@ class PostController extends Controller
         }
 
         $post->update($form_data);
+
+        if (isset($form_data['tags'])) {
+            $post->tags()->sync($form_data['tags']);
+
+        } else {
+            //if not exists key tags in form_data it means that user removed the check of all tags
+            //, so if this post have had tags attached, i remove them
+            $post->tags()->sync([]);
+        }
 
         return redirect()->route('admin.posts.show', ['post' => $post->id]);
     }
