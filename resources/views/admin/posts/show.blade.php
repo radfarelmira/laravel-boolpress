@@ -8,6 +8,14 @@
         
         <div class="mb-2"><strong>Categoria:</strong> {{ $category? $category->name : 'Nessuna' }}</div>
 
+        <div class="mb-2"><strong>Tags:</strong> 
+            @forelse ($post->tags as $tag)
+                {{ $tag->name }}{{ $loop->last? '' : ','}}
+            @empty
+                Nessuno
+            @endforelse
+        </div>
+
         <p>{{ $post->content }}</p>
 
         <div>
