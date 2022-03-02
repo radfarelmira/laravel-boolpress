@@ -28,15 +28,10 @@
                         <li class="page-item" :class="{'disabled': currentPage == 1}">
                             <a @click="getPosts(currentPage - 1)" class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
                         </li>
-                        <!-- <li class="page-item">
-                            <a class="page-link" href="#">1</a>
+                        <!-- Pages link -->
+                        <li v-for="n in lastPage" :key="n" class="page-item" :class="{ 'active': currentPage == n }">
+                            <a @click="getPosts(n)" class="page-link" href="#">{{ n }}</a>
                         </li>
-                        <li class="page-item active" aria-current="page">
-                            <a class="page-link" href="#">2</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">3</a>
-                        </li> -->
                         <!-- Next link -->
                         <li class="page-item" :class="{'disabled': currentPage == lastPage}">
                             <a @click="getPosts(currentPage + 1)" class="page-link" href="#">Next</a>
