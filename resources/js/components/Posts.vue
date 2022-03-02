@@ -10,7 +10,7 @@
                         <!-- <img src="..." class="card-img-top" alt="..."> -->
                         <div class="card-body">
                             <h5 class="card-title">{{post.title}}</h5>
-                            <p class="card-text"></p>
+                            <p class="card-text">{{truncateText(post.content, 50)}}</p>
                         </div>
                         <!-- <ul class="list-group list-group-flush">
                             <li class="list-group-item">An item</li>
@@ -21,6 +21,28 @@
                     </div>
                 </div>
                 <!-- End Single post card -->
+
+                <nav>
+                    <!-- Previus link-->
+                    <ul class="pagination">
+                        <li class="page-item" :class="{'disabled': currentPage == 1}">
+                            <a @click="getPosts(currentPage - 1)" class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                        </li>
+                        <!-- <li class="page-item">
+                            <a class="page-link" href="#">1</a>
+                        </li>
+                        <li class="page-item active" aria-current="page">
+                            <a class="page-link" href="#">2</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">3</a>
+                        </li> -->
+                        <!-- Next link -->
+                        <li class="page-item" :class="{'disabled': currentPage == lastPage}">
+                            <a @click="getPosts(currentPage + 1)" class="page-link" href="#">Next</a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
         </div>
     </section>
@@ -31,22 +53,34 @@ export default {
     name: 'Posts',
     data: function () {
         return {
-            posts: []
+            posts: [],
+            currentPage: 1,
+            lastPage: false
         };
     },
     methods: {
-        getPosts: function() {
-            axios.get('/api/posts')
+        getPosts: function(pageNumber) {
+            axios.get('/api/posts', {
+                params: {
+                    page: pageNumber
+                }
+            })
             .then((response)=>{
-                this.posts = response.data.results
+                this.posts = response.data.results.data;
+                this.currentPage = response.data.results.current_page;
+                this.lastPage = response.data.results.last_page;
             });
         },
         truncateText: function(text, maxCharsNumber) {
-            console.log(text);
+            if( text.length > maxCharsNumber) {
+                return text.substr(0, maxCharsNumber) + '...';
+            }
+
+            return text;
         }
     },
     created: function(){
-        this.getPosts();
+        this.getPosts(1);
     }
 }
 </script>
