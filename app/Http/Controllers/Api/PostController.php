@@ -4,10 +4,13 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Post;
 
-class PostCotroller extends Controller
+class PostController extends Controller
 {
     public function index() {
-        dd('todo: json');
+        $posts = Post::all();
+
+        return response()->json($posts);
     }
 }
