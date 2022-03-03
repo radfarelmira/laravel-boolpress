@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Posts />
+        <router-view></router-view>
     </div>
 </template>
 
