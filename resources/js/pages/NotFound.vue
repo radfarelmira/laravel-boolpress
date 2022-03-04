@@ -3,7 +3,7 @@
         <div class="container">
             <h2>Error 404: Search is not found </h2>
 
-            <router-link :to="{ name: 'home' }">Go back to Homepage</router-link>
+            <router-link :to="{ name: 'blog' }">Go back to Blog page</router-link>
         </div>
     </section>
 </template>
