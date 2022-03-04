@@ -1,13 +1,21 @@
 <template>
     <section>
         <div class="container">
-            <h1>Post Details</h1>
+            <h1>{{post.title}}</h1>
 
-            <div>Category: </div>
+            <div v-if="post.category">Category: {{ post.category.name}}</div>
 
-            <div>tags</div>
+            <div v-if="post.tags.length > 0 ">
+                <router-link
+                v-for="tag in post.tags" :key="tag.id"
+                class="badge bg-warning text-dark mx-1"
+                :to="{ name: 'tag-details', params: { slug: tag.slug} }">
+                {{tag.name}}
+                </router-link>
+                
+            </div>
 
-            <p>post Details content</p>
+            <p>{{post.content}}</p>
         </div>
     </section>
 </template>
@@ -17,7 +25,7 @@ export default {
     name: 'PostDetails',
     data: function () {
         return {
-            $post: false,
+            post: false,
         };
     },
     methods: {
