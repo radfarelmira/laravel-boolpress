@@ -39,6 +39,10 @@ export default {
                 {
                     name: 'tags-list',
                     label: 'Tags'
+                },
+                {
+                    name: 'contacts',
+                    label: 'Contattaci'
                 }  
             ]
         };
