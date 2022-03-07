@@ -4,7 +4,7 @@
     <section>
         <h2>Modifica post</h2>
 
-        <form action="{{ route('admin.posts.update', ['post' => $post->id] ) }}" method="post">
+        <form action="{{ route('admin.posts.update', ['post' => $post->id] ) }}" method="post" enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
@@ -53,6 +53,21 @@
             @error('content')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
+
+            <div class="mb-3">
+                <label for="image" class="form-label">Image</label>
+                <input type="file" id="image" name="image">
+            </div>
+
+            @error('image')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
+
+            @if ($post->cover)
+                <div class="current-image">Immagine attuale:
+                    <img src="{{ asset('storage/' . $post->cover) }}" alt="{{$post->title}}">
+                </div>
+            @endif
 
             <button type="submit" class="btn btn-primary">Submit</button>
           </form>
