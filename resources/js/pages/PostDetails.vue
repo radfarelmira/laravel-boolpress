@@ -12,8 +12,9 @@
                 :to="{ name: 'tag-details', params: { slug: tag.slug} }">
                 {{tag.name}}
                 </router-link>
-                
             </div>
+
+            <img v-if="post.cover" :src="post.cover" class="card-img-top" :alt="post.title">
 
             <p>{{post.content}}</p>
         </div>
