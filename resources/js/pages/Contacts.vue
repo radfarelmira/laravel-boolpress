@@ -34,7 +34,7 @@
                         <p v-for="(error, index) in errors.message" :key="index">{{ error }}</p>
                     </div>
 
-                    <button type="submit" @click.prevent="sendMessage()"  class="btn btn-primary">Submit</button>
+                    <button :disabled="disabled" type="submit" @click.prevent="sendMessage()"  class="btn btn-primary">Submit</button>
                 </form>
             </div>
         </section>
@@ -51,11 +51,14 @@ export default {
             name: '',
             message: '',
             success: false,
-            errors: {}
+            errors: {},
+            disabled: false,
         };
     },
     methods: {
         sendMessage: function() {
+            this.disable= true;
+
             axios.post('/api/leads/store', {
                 email: this.email,
                 name: this.name,
@@ -71,7 +74,10 @@ export default {
                 } else {
                     this.success = false;
                     this.errors = response.data.errors
+
                 }
+
+                this.disabled= false;
             });
         }
     }

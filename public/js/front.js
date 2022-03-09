@@ -2157,13 +2157,15 @@ __webpack_require__.r(__webpack_exports__);
       name: '',
       message: '',
       success: false,
-      errors: {}
+      errors: {},
+      disabled: false
     };
   },
   methods: {
     sendMessage: function sendMessage() {
       var _this = this;
 
+      this.disable = true;
       axios.post('/api/leads/store', {
         email: this.email,
         name: this.name,
@@ -2179,6 +2181,8 @@ __webpack_require__.r(__webpack_exports__);
           _this.success = false;
           _this.errors = response.data.errors;
         }
+
+        _this.disabled = false;
       });
     }
   }
@@ -3357,7 +3361,7 @@ var render = function () {
             "button",
             {
               staticClass: "btn btn-primary",
-              attrs: { type: "submit" },
+              attrs: { disabled: _vm.disabled, type: "submit" },
               on: {
                 click: function ($event) {
                   $event.preventDefault()
